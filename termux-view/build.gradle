@@ -5,7 +5,7 @@ plugins {
 android {
     namespace 'com.termux.view'
     compileSdk 36
-    buildToolsVersion '35.0.0'
+    buildToolsVersion '36.0.0'
 
     defaultConfig {
         minSdk 21
@@ -21,4 +21,5 @@ android {
 dependencies {
     api project(':termux-emulator')
     implementation libs.androidx.annotation
+    implementation libs.androidx.core
 }
