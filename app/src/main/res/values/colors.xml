@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="terminal_bg">#070B12</color>
+    <color name="terminal_bg_gradient_start">#0D1522</color>
+    <color name="terminal_bg_gradient_end">#070B12</color>
+    <color name="terminal_surface">#0F1722</color>
+    <color name="terminal_panel">#0C131D</color>
+    <color name="terminal_border">#223047</color>
+    <color name="terminal_fg">#FFFFFF</color>
+    <color name="terminal_fg_dim">#7A8BA3</color>
+    <color name="terminal_green">#2EE6A8</color>
+    <color name="terminal_green_dim">#1E8F6C</color>
+    <color name="terminal_red">#FF5F56</color>
+    <color name="terminal_yellow">#FFBD2E</color>
+    <color name="window_dot_green">#27CA3F</color>
+</resources>

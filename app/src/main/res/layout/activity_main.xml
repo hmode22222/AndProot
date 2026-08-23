@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/black">
+
+    <!-- Terminal + extra keys: fills the whole screen, Termux style -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <com.termux.view.TerminalView
+            android:id="@+id/terminalView"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="@android:color/black"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:scrollbars="vertical" />
+
+        <!-- Extra keys row (Termux style) -->
+        <HorizontalScrollView
+            android:id="@+id/keysRow"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#F00D0D0D"
+            android:fillViewport="true"
+            android:overScrollMode="never"
+            android:scrollbars="none">
+
+            <LinearLayout
+                android:id="@+id/keysBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingStart="4dp"
+                android:paddingEnd="4dp">
+
+                <TextView
+                    android:id="@+id/keyEsc"
+                    style="@style/TermKey"
+                    android:text="ESC" />
+
+                <TextView
+                    android:id="@+id/keyTab"
+                    style="@style/TermKey"
+                    android:text="TAB" />
+
+                <TextView
+                    android:id="@+id/keyCtrl"
+                    style="@style/TermKey"
+                    android:text="CTRL" />
+
+                <TextView
+                    android:id="@+id/keyAlt"
+                    style="@style/TermKey"
+                    android:text="ALT" />
+
+                <TextView
+                    android:id="@+id/keyPipe"
+                    style="@style/TermKey"
+                    android:text="|" />
+
+                <TextView
+                    android:id="@+id/keySlash"
+                    style="@style/TermKey"
+                    android:text="/" />
+
+                <TextView
+                    android:id="@+id/keyDash"
+                    style="@style/TermKey"
+                    android:text="-" />
+
+                <TextView
+                    android:id="@+id/keyUp"
+                    style="@style/TermKey"
+                    android:text="&#8593;" />
+
+                <TextView
+                    android:id="@+id/keyDown"
+                    style="@style/TermKey"
+                    android:text="&#8595;" />
+
+                <TextView
+                    android:id="@+id/keyLeft"
+                    style="@style/TermKey"
+                    android:text="&#8592;" />
+
+                <TextView
+                    android:id="@+id/keyRight"
+                    style="@style/TermKey"
+                    android:text="&#8594;" />
+            </LinearLayout>
+        </HorizontalScrollView>
+    </LinearLayout>
+
+    <!-- Loading / install screen shown while the system is being installed -->
+    <LinearLayout
+        android:id="@+id/setupView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/black"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="32dp"
+        android:visibility="gone">
+
+        <ImageView
+            android:id="@+id/setupIcon"
+            android:layout_width="96dp"
+            android:layout_height="96dp"
+            android:contentDescription="Ubuntu"
+            android:src="@mipmap/ic_launcher" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:fontFamily="@font/jetbrains_mono"
+            android:text="Ubuntu Linux"
+            android:textColor="@color/terminal_fg"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/setupStatus"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:fontFamily="@font/jetbrains_mono"
+            android:gravity="center"
+            android:text="جاري التحميل..."
+            android:textColor="@color/terminal_fg_dim"
+            android:textSize="14sp" />
+
+        <ProgressBar
+            android:id="@+id/setupProgress"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:max="100" />
+
+        <TextView
+            android:id="@+id/setupPercent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/jetbrains_mono"
+            android:text="0%"
+            android:textColor="@color/terminal_green"
+            android:textSize="13sp" />
+
+        <TextView
+            android:id="@+id/setupRetry"
+            style="@style/ToolbarPill"
+            android:layout_marginTop="24dp"
+            android:paddingStart="24dp"
+            android:paddingEnd="24dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:text="Retry"
+            android:visibility="gone" />
+    </LinearLayout>
+
+    <!-- Toolbar revealed by swiping down from the top (Termux style) -->
+    <LinearLayout
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#CC000000"
+        android:elevation="6dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingStart="14dp"
+        android:paddingEnd="14dp"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"
+        android:translationY="-100dp"
+        android:visibility="gone">
+
+        <View
+            android:layout_width="8dp"
+            android:layout_height="8dp"
+            android:background="@drawable/bg_dot" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:fontFamily="@font/jetbrains_mono"
+            android:text="proot@android"
+            android:textColor="@color/terminal_fg_dim"
+            android:textSize="13sp" />
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="1" />
+
+        <TextView
+            android:id="@+id/toolbarLinux"
+            style="@style/ToolbarPill"
+            android:text="Linux" />
+
+        <TextView
+            android:id="@+id/toolbarSetup"
+            style="@style/ToolbarPill"
+            android:layout_marginStart="6dp"
+            android:text="Setup" />
+
+        <TextView
+            android:id="@+id/toolbarClear"
+            style="@style/ToolbarPill"
+            android:layout_marginStart="6dp"
+            android:text="Clear" />
+    </LinearLayout>
+
+    <!-- Swipe-down detection strip at the top -->
+    <View
+        android:id="@+id/toolbarStrip"
+        android:layout_width="match_parent"
+        android:layout_height="26dp" />
+
+    <!-- Error fallback (full screen) -->
+    <TextView
+        android:id="@+id/errorView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/black"
+        android:fontFamily="@font/jetbrains_mono"
+        android:gravity="center"
+        android:padding="20dp"
+        android:textColor="@color/terminal_fg"
+        android:textSize="13sp"
+        android:visibility="gone" />
+</FrameLayout>
