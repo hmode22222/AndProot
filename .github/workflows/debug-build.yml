@@ -1,0 +1,80 @@
+name: Debug Build APK
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+  workflow_dispatch:  # للتشغيل اليدوي
+
+jobs:
+  build-debug:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up JDK 17
+      uses: actions/setup-java@v4
+      with:
+        java-version: '17'
+        distribution: 'temurin'
+
+    - name: Set up Gradle
+      uses: gradle/actions/setup-gradle@v4
+      with:
+        gradle-version: '8.13'
+
+    - name: Grant execute permission for gradlew
+      run: chmod +x gradlew
+
+    - name: Clean build
+      run: ./gradlew clean
+
+    - name: Build Debug APK
+      run: ./gradlew assembleDebug
+
+    - name: Run tests (optional)
+      run: ./gradlew test
+
+    - name: Upload Debug APK
+      uses: actions/upload-artifact@v4
+      with:
+        name: AndProot-Debug
+        path: app/build/outputs/apk/debug/*.apk
+        retention-days: 30
+
+    - name: Upload Test Results
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: test-results
+        path: app/build/reports/tests/
+        retention-days: 7
+
+    - name: Upload Lint Report
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: lint-report
+        path: app/build/reports/lint-results.html
+        retention-days: 7
+
+    - name: List generated APK
+      run: |
+        echo "📦 APK files generated:"
+        ls -lh app/build/outputs/apk/debug/
+        echo "📊 APK size:"
+        du -sh app/build/outputs/apk/debug/*.apk
+
+    - name: Get APK info
+      run: |
+        if [ -f app/build/outputs/apk/debug/*.apk ]; then
+          echo "✅ Debug APK built successfully!"
+          echo "📱 File: $(basename app/build/outputs/apk/debug/*.apk)"
+        else
+          echo "❌ No APK found!"
+          exit 1
+        fi
